@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ProductivePath – Team Backbenchers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <div class="app-status-bar">
+      <div class="pill-badge">
+        <span class="pill-indicator"></span>
+        <span id="statusUser">Guest</span>
+      </div>
+      <div class="text-xs">Focus mode</div>
+    </div>
+
+    <div class="app-header">
+     <div class="brand">
+  <div class="brand-logo">P</div>
+  <div>
+    <div class="brand-text-title">Productivity Tracker</div>
+    <div class="brand-text-sub">
+      Team: The Backbenchers
+    </div>
+    <div class="brand-text-sub">
+      Coordinator: Prof. Mukhti
+    </div>
+  </div>
+</div>
+
+      <button class="icon-btn" id="logoutBtn" title="Logout">
+        ⏻
+      </button>
+    </div>
+
+    <div class="app-main">
+      <!-- STEP 1: SIGNUP / QUICK LOGIN -->
+      <div class="page" id="page-step1">
+        <div class="section-title">Step 1 · Create account</div>
+        <div class="section-subtitle">
+          Start your productivity journey with a simple profile.
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Sign up</div>
+            <div class="card-pill">Step 1 of 7</div>
+          </div>
+
+          <div class="input-group">
+            <div class="input-label">
+              Name
+              <span>Shown on your dashboard</span>
+            </div>
+            <input
+              type="text"
+              id="signupName"
+              class="text-input"
+              placeholder="Your name"
+            />
+          </div>
+
+          <div class="input-group">
+            <div class="input-label">
+              Email
+              <span>Used as your ID</span>
+            </div>
+            <input
+              type="email"
+              id="signupEmail"
+              class="text-input"
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <div class="input-group">
+            <div class="input-label">
+              Password
+              <span>Min. 4 characters (demo)</span>
+            </div>
+            <input
+              type="password"
+              id="signupPassword"
+              class="text-input"
+              placeholder="Choose a password"
+            />
+          </div>
+
+          <div id="signupError" class="error-text" style="display:none;"></div>
+
+          <button id="step1NextBtn" class="primary-btn" type="button">
+            Continue to career →
+          </button>
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Already have an account?</div>
+          </div>
+          <div class="input-group">
+            <div class="input-label">Quick login</div>
+            <input
+              type="email"
+              id="loginEmail"
+              class="text-input"
+              placeholder="you@example.com"
+            />
+          </div>
+          <div class="input-group">
+            <div class="input-label">Password</div>
+            <input
+              type="password"
+              id="loginPassword"
+              class="text-input"
+              placeholder="••••••••"
+            />
+          </div>
+          <div id="loginError" class="error-text" style="display:none;"></div>
+          <button id="loginBtn" class="secondary-btn" type="button">
+            Log in and start tracking
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2: CAREER -->
+      <div class="page" id="page-step2">
+        <div class="section-title">Step 2 · Choose your career</div>
+        <div class="section-subtitle">
+          Pick the path you want to focus on right now.
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Career path</div>
+            <div class="card-pill">Step 2 of 7</div>
+          </div>
+
+          <div class="career-grid" id="careerGrid"></div>
+
+          <div class="tag-row">
+            <div class="tag-pill">
+              <div class="tag-pill-dot" style="background:#22c55e;"></div>
+              You can change this later in code (demo)
+            </div>
+          </div>
+
+          <div id="careerError" class="error-text" style="display:none;"></div>
+
+          <button id="step2NextBtn" class="primary-btn" type="button">
+            Next · Experience level →
+          </button>
+          <button id="step2BackBtn" class="ghost-btn" type="button">
+            ← Back to profile
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: EXPERIENCE LEVEL -->
+      <div class="page" id="page-step3">
+        <div class="section-title">Step 3 · Experience level</div>
+        <div class="section-subtitle">
+          Tell us where you are so habits match your stage.
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Experience</div>
+            <div class="card-pill">Step 3 of 7</div>
+          </div>
+
+          <div class="chips-row" id="levelRow">
+            <button class="app-chip small" data-level="beginner">
+              <span class="app-chip-dot"></span> Beginner
+            </button>
+            <button class="app-chip small" data-level="intermediate">
+              <span class="app-chip-dot"></span> Intermediate
+            </button>
+            <button class="app-chip small" data-level="advanced">
+              <span class="app-chip-dot"></span> Advanced
+            </button>
+          </div>
+
+          <div id="levelError" class="error-text" style="display:none;"></div>
+
+          <button id="step3NextBtn" class="primary-btn" type="button">
+            Next · Daily time →
+          </button>
+          <button id="step3BackBtn" class="ghost-btn" type="button">
+            ← Back to career
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 4: DAILY TIME -->
+      <div class="page" id="page-step4">
+        <div class="section-title">Step 4 · Daily time</div>
+        <div class="section-subtitle">
+          How much focused time can you realistically give?
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Available time</div>
+            <div class="card-pill">Step 4 of 7</div>
+          </div>
+
+          <div class="chips-row" id="timeRow">
+            <button class="app-chip small" data-time="15">15–25 min</button>
+            <button class="app-chip small" data-time="30">30–45 min</button>
+            <button class="app-chip small" data-time="60">60+ min</button>
+          </div>
+
+          <div id="timeError" class="error-text" style="display:none;"></div>
+
+          <button id="step4NextBtn" class="primary-btn" type="button">
+            Next · Preferred tools →
+          </button>
+          <button id="step4BackBtn" class="ghost-btn" type="button">
+            ← Back to experience
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 5: PREFERRED TOOLS -->
+      <div class="page" id="page-step5">
+        <div class="section-title">Step 5 · Preferred tools</div>
+        <div class="section-subtitle">
+          Pick the apps or tools you consider productive for this path.
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Trusted tools</div>
+            <div class="card-pill">Step 5 of 7</div>
+          </div>
+
+          <div class="apps-grid" id="appsGrid"></div>
+
+          <div class="input-group" style="margin-top:10px;">
+            <div class="input-label">
+              Custom productive tool (optional)
+              <span>Add one and press Enter</span>
+            </div>
+            <input
+              id="customAppInput"
+              class="text-input"
+              placeholder="e.g., Notepad, Terminal"
+            />
+          </div>
+
+          <div class="chips-row" id="selectedAppsRow"></div>
+
+          <div id="appsError" class="error-text" style="display:none;"></div>
+
+          <button id="step5NextBtn" class="primary-btn" type="button">
+            Next · Generated goals →
+          </button>
+          <button id="step5BackBtn" class="ghost-btn" type="button">
+            ← Back to daily time
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 6: GOALS / ROADMAP PREVIEW -->
+      <div class="page" id="page-step6">
+        <div class="section-title">Step 6 · Your generated goals</div>
+        <div class="section-subtitle" id="roadmapSubtitle">
+          Based on your answers, here is a daily roadmap.
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title" id="roadmapTitle">Daily habits</div>
+            <span class="pill-soft-blue" id="roadmapCareerBadge"></span>
+          </div>
+
+          <div id="roadmapSteps"></div>
+
+          <div class="tag-row">
+            <div class="tag-pill">
+              <div class="tag-pill-dot" style="background:#22c55e;"></div>
+              You will mark these from the next pages
+            </div>
+          </div>
+
+          <button id="step6NextBtn" class="primary-btn" type="button">
+            Next · Checklist preview →
+          </button>
+          <button id="step6BackBtn" class="ghost-btn" type="button">
+            ← Back to tools
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 7: CHECKLIST PREVIEW -->
+      <div class="page" id="page-step7">
+        <div class="section-title">Step 7 · Confirm checklist</div>
+        <div class="section-subtitle">
+          This is what you will see every day to mark as done.
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Today checklist preview</div>
+            <div class="card-pill">Step 7 of 7</div>
+          </div>
+
+          <div class="activity-list" id="checklistPreview"></div>
+
+          <button id="step7NextBtn" class="primary-btn" type="button">
+            Go to Mark‑as‑Done page →
+          </button>
+          <button id="step7BackBtn" class="ghost-btn" type="button">
+            ← Back to goals
+          </button>
+        </div>
+      </div>
+
+      <!-- PAGE 8: MARK AS DONE -->
+      <div class="page" id="page-mark">
+        <div class="section-title">Mark today’s habits</div>
+        <div class="section-subtitle">
+          Tap “Mark done” as you complete each habit today.
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Today checklist</div>
+            <div class="tag-row" id="todayChecklistSummary"></div>
+          </div>
+          <div class="activity-list" id="checklistContainer"></div>
+
+          <button id="markNextBtn" class="primary-btn" type="button">
+            Finish & open dashboard →
+          </button>
+          <button id="markBackBtn" class="ghost-btn" type="button">
+            ← Back to checklist preview
+          </button>
+        </div>
+      </div>
+
+      <!-- PAGE 9: DASHBOARD -->
+      <div class="page" id="page-dashboard">
+        <div class="section-title">Dashboard</div>
+        <div class="section-subtitle">
+          See your score, use the timer, and view history.
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Productivity score</div>
+            <span class="pill-soft-amber" id="dashboardCareerBadge"></span>
+          </div>
+
+          <div class="progress-ring" id="progressRing">
+            <div class="progress-ring-inner">
+              <div class="progress-main" id="productivityPercent">0%</div>
+              <div class="progress-caption" id="productivityLabel">
+                Booting up 🚀
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-meta-row">
+            <div>
+              <div class="progress-meta-label">Checklist items done</div>
+              <div class="progress-meta-value" id="tasksCompletedValue">
+                0 / 0
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="progress-meta-label">Focus minutes (manual)</div>
+              <div class="progress-meta-value" id="focusedMinutesValue">
+                0 min
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-meta-row" style="margin-top: 12px;">
+            <div>
+              <div class="progress-meta-label">Current streak</div>
+              <div class="progress-meta-value" id="streakCount">
+                0 days
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="progress-meta-label">Weekly average</div>
+              <div class="progress-meta-value" id="weeklyProgress">
+                0%
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-meta-row" style="margin-top: 8px;">
+            <div>
+              <div class="progress-meta-label">Weekly goal (70%+)</div>
+              <div class="progress-meta-value" id="goalProgress">
+                0/7 days
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="progress-meta-label">Trend</div>
+              <div class="progress-meta-value" id="productivityTrend">
+                →
+              </div>
+            </div>
+          </div>
+
+          <div class="timer-panel">
+            <div>
+              <div class="timer-time" id="timerDisplay">00:00</div>
+              <div class="timer-label">
+                Optional focus timer • Use "Reset & log" to save minutes
+              </div>
+            </div>
+            <div class="timer-controls">
+              <button id="timerStartStopBtn" class="timer-btn primary" type="button">
+                ▶ Start
+              </button>
+              <button id="timerResetBtn" class="timer-btn secondary" type="button">
+                ⟳ Reset & log
+              </button>
+            </div>
+          </div>
+          
+          <button id="linkDeviceDashboardBtn" class="secondary-btn" type="button" style="margin-top: 12px;">
+            🔗 Link New Device
+          </button>
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Recent activities</div>
+          </div>
+          <div class="activity-list" id="activityList"></div>
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">App usage (today)</div>
+          </div>
+          <div id="appUsageList" class="activity-list">
+            <div class="no-activities">No app usage data yet</div>
+          </div>
+        </div>
+
+        <div class="insights-card glass">
+          <div class="insights-title">Daily insights</div>
+          <div class="insights-text" id="insightsText">
+            Complete at least one habit to start building your streak.
+          </div>
+          <div class="insights-actions" id="insightsActions"></div>
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">History & export</div>
+          </div>
+          <div class="flex-row">
+            <div class="input-group" style="flex:1;">
+              <div class="input-label">
+                Pick a day
+                <span>View saved report</span>
+              </div>
+              <input type="date" id="historyDate" class="text-input" />
+            </div>
+            <button id="viewHistoryBtn" class="secondary-btn" style="flex:1;">
+              View summary
+            </button>
+          </div>
+          <button id="exportPdfBtn" class="ghost-btn" type="button">
+            Export as PDF (concept demo)
+          </button>
+          <div id="historySummary" class="text-muted" style="margin-top:6px;"></div>
+        </div>
+      </div>
+
+      <!-- PAGE 10: LINK DEVICE -->
+      <div class="page" id="page-link-device">
+        <div class="section-title">Link New Device</div>
+        <div class="section-subtitle">
+          Connect another device to sync your productivity data.
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Generate Link Code</div>
+          </div>
+          
+          <div class="input-group">
+            <div class="input-label">Your Link Code</div>
+            <div id="deviceCodeDisplay" class="code-display">
+              ——————
+            </div>
+          </div>
+          
+          <button id="generateCodeBtn" class="primary-btn" type="button">
+            Generate New Code
+          </button>
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Already Have a Code?</div>
+          </div>
+          
+          <div class="input-group">
+            <div class="input-label">Enter 6-digit code</div>
+            <input type="text" id="deviceCodeInput" class="text-input" placeholder="ABC123" maxlength="6" />
+          </div>
+          
+          <div id="linkDeviceError" class="error-text" style="display:none;"></div>
+          
+          <button id="linkDeviceBtn" class="secondary-btn" type="button">
+            Link Device
+          </button>
+        </div>
+
+        <div class="card glass">
+          <div class="card-header-line">
+            <div class="card-title">Linked Devices</div>
+          </div>
+          <div id="linkedDevicesList" class="activity-list">
+            <div class="no-activities">No devices linked yet</div>
+          </div>
+        </div>
+
+        <button id="linkDeviceBackBtn" class="ghost-btn" type="button">
+          ← Back to Dashboard
+        </button>
+      </div>
+    </div>
+
+    <div class="footer-nav">
+      <div class="footer-tab active" data-tab="flow">
+        <span>🧭</span>
+        Flow
+      </div>
+      <div class="footer-tab" data-tab="mark">
+        <span>✅</span>
+        Mark
+      </div>
+      <div class="footer-tab" data-tab="dashboard">
+        <span>📊</span>
+        Dashboard
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
