@@ -1,3 +1,6 @@
+/* global data, api */
+/* exported logAppUsage, classifyAppProductivity, computeProductivityPercentV2 */
+/* eslint-disable no-unused-vars */
 // ==============================================================================
 // DASHBOARD WITH APP USAGE TRACKING - PUBLIC/APP.JS EXTENSION
 // ==============================================================================

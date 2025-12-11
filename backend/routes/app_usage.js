@@ -56,6 +56,38 @@ router.post('/log', async (req, res) => {
         });
     }
 
+    // QUICK HEURISTIC: classify common apps synchronously so UI reflects changes immediately
+    try {
+      const nameLc = (app_name || '').toLowerCase();
+      const productiveHintsSync = ['vscode', 'vs code', 'code', 'terminal', 'git', 'python', 'node', 'intellij', 'pycharm', 'notion', 'figma', 'photoshop', 'word', 'excel', 'powerpoint'];
+      const unproductiveHintsSync = ['youtube', 'tiktok', 'twitter', 'facebook', 'instagram', 'reddit', 'netflix', 'discord', 'tinder', 'snapchat'];
+      let syncIsProductive = null;
+      let syncConfidence = 0;
+      if (productiveHintsSync.some(h => nameLc.includes(h))) {
+        syncIsProductive = true;
+        syncConfidence = 0.6;
+      } else if (unproductiveHintsSync.some(h => nameLc.includes(h))) {
+        syncIsProductive = false;
+        syncConfidence = 0.6;
+      }
+
+      if (syncIsProductive !== null) {
+        // Persist synchronous heuristic classification so frontend can show updates immediately
+        await db('app_usage')
+          .where({ user_id: req.user.id, date: dateKey, app_name })
+          .update({
+            is_productive: syncIsProductive,
+            productivity_score: Math.round(syncConfidence * 100),
+            last_classification_error: null,
+            classification_attempts: 0,
+            next_retry_at: null,
+            last_updated: db.fn.now(),
+          });
+      }
+    } catch (syncErr) {
+      console.warn('Synchronous heuristic classification failed:', syncErr && syncErr.message ? syncErr.message : syncErr);
+    }
+
     // After logging, attempt to classify the app (ML service) and update DB.
     // If ML is unavailable we apply a simple heuristic fallback.
     (async function classifyAndUpdate() {
@@ -108,9 +140,9 @@ router.post('/log', async (req, res) => {
           updatePayload.next_retry_at = null;
         } else {
           // record that an ML attempt happened (so worker can backoff/retry)
-          updatePayload.classification_attempts = db.raw("coalesce(classification_attempts, 0) + 1");
+          updatePayload.classification_attempts = db.raw('coalesce(classification_attempts, 0) + 1');
           // schedule a retry in exponential backoff (handled by worker, here set a small delay)
-          updatePayload.next_retry_at = db.raw("datetime('now', '+1 minute')");
+          updatePayload.next_retry_at = db.raw('datetime(\'now\', \'+1 minute\')');
           updatePayload.last_classification_error = mlError || 'no classification (heuristic not matched)';
         }
 
@@ -123,7 +155,16 @@ router.post('/log', async (req, res) => {
       }
     })();
 
-    return res.json({ success: true, message: `Logged ${minutes_used} minutes for ${app_name}` });
+    // Return the created/updated app_usage row so client can immediately reflect changes
+    try {
+      const appRow = await db('app_usage')
+        .where({ user_id: req.user.id, date: dateKey, app_name })
+        .first();
+
+      return res.json({ success: true, message: `Logged ${minutes_used} minutes for ${app_name}`, app: appRow });
+    } catch (rErr) {
+      return res.json({ success: true, message: `Logged ${minutes_used} minutes for ${app_name}` });
+    }
   } catch (e) {
     console.error('Error logging app usage:', e);
     return res.status(500).json({ error: e.message });

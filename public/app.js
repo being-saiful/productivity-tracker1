@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* -----------------------------------------------------------------------
-   PUBLIC/app.js – Front‑end “thin client” that talks to the REST API
-   -----------------------------------------------------------------------*/
+  PUBLIC/app.js – Front‑end “thin client” that talks to the REST API
+  -----------------------------------------------------------------------*/
 
 const API_BASE = '/api'; // Express serves the same origin
 

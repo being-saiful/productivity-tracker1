@@ -1,6 +1,6 @@
 ﻿// backend/utils/ml.js
 const axios = require('axios');
-const ML_SERVICE_URL = process.env.ML_SERVICE_URL || "http://localhost:8000";
+const ML_SERVICE_URL = process.env.ML_SERVICE_URL || 'http://localhost:8000';
 
 /**
  * Ask the app-productivity classifier if a given app is productive.

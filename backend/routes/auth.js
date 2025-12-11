@@ -66,7 +66,7 @@ router.post('/login', async (req, res) => {
  * Strip password_hash before sending anything back to the client.
  */
 function omitSensitive(user) {
-  const { password_hash, ...rest } = user;
+  const { password_hash: _password_hash, ...rest } = user;
   return rest;
 }
 

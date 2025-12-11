@@ -65,7 +65,7 @@ router.put('/apps', async (req, res) => {
 });
 
 function omitSensitive(user) {
-  const { password_hash, ...rest } = user;
+  const { password_hash: _password_hash, ...rest } = user;
   return rest;
 }
 

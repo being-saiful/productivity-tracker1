@@ -118,7 +118,9 @@ router.patch('/today', async (req, res) => {
     if (raw && raw.completed_task_ids) {
       try {
         completed = JSON.parse(raw.completed_task_ids);
-      } catch {}
+      } catch (err) {
+        // ignore malformed JSON and continue with empty list
+      }
     }
 
     const already = completed.includes(stepId);
