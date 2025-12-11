@@ -5,6 +5,7 @@
   <title>ProductivePath – Team Backbenchers</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body>
   <div class="app-shell">
@@ -551,4 +552,13 @@
 
   <script src="app.js"></script>
 </body>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').then(() => {
+        console.log('ServiceWorker registered');
+      }).catch(()=>{});
+    });
+  }
+</script>
 </html>
