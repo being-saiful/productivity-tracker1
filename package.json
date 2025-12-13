@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node backend/index.js",
     "migrate": "knex migrate:latest",
-    "postinstall": "if [ -f ./scripts/run_migrations_if_db.js ]; then node ./scripts/run_migrations_if_db.js; fi",
     "dev": "nodemon backend/index.js",
+    "build": "echo \"No build step required\"",
     "lint": "eslint \"backend/**/*.js\" \"public/**/*.js\" --fix"
   },
   "author": "Imam Hasan",
