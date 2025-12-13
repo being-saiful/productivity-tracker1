@@ -1,0 +1,22 @@
+# use a base image that has both node and python. 
+# this one is thicc but safe.
+FROM nikolaik/python-nodejs:python3.11-nodejs20
+
+WORKDIR /app
+
+# copy dependency definitions
+COPY package*.json ./
+COPY requirements.txt ./
+
+# install dependencies
+RUN npm install
+RUN pip install -r requirements.txt
+
+# copy the rest of your spaghetti code
+COPY . .
+
+# expose the port (usually 3000 or 8080)
+EXPOSE 3000
+
+# start the engine
+CMD ["npm", "start"]
