@@ -1,13 +1,19 @@
 {
   "name": "productivity-tracker-backend",
   "version": "1.0.0",
+<<<<<<< HEAD
   "description": "Productivity Tracker Backend API",
+=======
+>>>>>>> f30c0edd2da96ee542890d584f2a7bafaf219b57
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
+<<<<<<< HEAD
   "author": "Imam Hasan",
   "license": "MIT",
+=======
+>>>>>>> f30c0edd2da96ee542890d584f2a7bafaf219b57
   "dependencies": {
     "axios": "^1.6.0",
     "bcrypt": "^5.1.0",
