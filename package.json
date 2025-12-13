@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node backend/index.js",
     "migrate": "knex migrate:latest",
-    "postinstall": "node scripts/run_migrations_if_db.js",
+    "postinstall": "test -f ./scripts/run_migrations_if_db.js && node ./scripts/run_migrations_if_db.js",
     "dev": "nodemon backend/index.js",
     "lint": "eslint \"backend/**/*.js\" \"public/**/*.js\" --fix"
   },
